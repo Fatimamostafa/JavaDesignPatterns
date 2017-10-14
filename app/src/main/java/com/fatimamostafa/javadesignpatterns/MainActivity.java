@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.fatimamostafa.javadesignpatterns.globalvariable.GlobalVariables;
 import com.fatimamostafa.javadesignpatterns.staticmethodlibrary.ActivityHelper;
 
 import butterknife.BindView;
@@ -18,11 +19,16 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.tvSampleText)
     TextView tvSampleText;
 
+    private GlobalVariables appContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        appContext = (GlobalVariables) getApplicationContext();
+        tvSampleText.setText(appContext.getTextToDisplay());
 
         hello.setOnClickListener(view ->
                 ActivityHelper.log(this, tvSampleText, "Static Method Library Test", true));
@@ -30,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Save and restore state
+/*
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         ActivityHelper.log(this, tvSampleText, "saving state", true);
@@ -43,7 +50,11 @@ public class MainActivity extends AppCompatActivity {
         tvSampleText.setText(savedInstanceState.getString(LOG_TEXT_KEY));
         ActivityHelper.log(this, tvSampleText, "Restoring state", true);
     }
+*/
 
-
-    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        appContext.setTextToDisplay(tvSampleText.getText().toString());
+    }
 }
