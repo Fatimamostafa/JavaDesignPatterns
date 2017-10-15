@@ -5,19 +5,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.fatimamostafa.javadesignpatterns.customcallbackmethod.CallbackFragment;
 import com.fatimamostafa.javadesignpatterns.globalvariable.GlobalVariables;
 import com.fatimamostafa.javadesignpatterns.staticmethodlibrary.ActivityHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements CallbackFragment.OnFragmentInteractionListener{
 
     private static final String LOG_TEXT_KEY = "LOG_TEXT_KEY";
-    @BindView(R.id.hello)
-    Button hello;
-    @BindView(R.id.tvSampleText)
-    TextView tvSampleText;
+    @BindView(R.id.tvLog)
+    TextView tvLog;
+    @BindView(R.id.btnRun)
+    Button btnRun;
+    @BindView(R.id.btnClear)
+    Button btnClear;
+
 
     private GlobalVariables appContext;
 
@@ -28,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         appContext = (GlobalVariables) getApplicationContext();
-        tvSampleText.setText(appContext.getTextToDisplay());
+        tvLog.setText(appContext.getTextToDisplay());
 
-        hello.setOnClickListener(view ->
-                ActivityHelper.log(this, tvSampleText, "Static Method Library Test", true));
+        btnRun.setOnClickListener(view ->
+                ActivityHelper.log(this, tvLog, "Static Method Library Test", true));
 
     }
 
@@ -55,6 +60,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        appContext.setTextToDisplay(tvSampleText.getText().toString());
+        appContext.setTextToDisplay(tvLog.getText().toString());
+    }
+
+    @Override
+    public void onFragmentInteraction() {
+        ActivityHelper.log(this, tvLog, "From fragment", true);
     }
 }

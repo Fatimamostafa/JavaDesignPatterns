@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.fatimamostafa.javadesignpatterns.MainActivity">
+    tools:context="com.fatimamostafa.javadesignpatterns.fragmentasynctask.TestActivity">
 
     <ScrollView
         android:id="@+id/scrollLog"
@@ -18,7 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=""
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:freezesText="true"/>
     </ScrollView>
 
     <LinearLayout
@@ -34,14 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Run"
+            android:onClick="onRunBtnClick"
             />
-
-        <fragment
-            android:id="@+id/myFragment"
-            android:name="com.fatimamostafa.javadesignpatterns.customcallbackmethod.CallbackFragment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/btnClear"
@@ -49,7 +44,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Clear"
-           />
+            android:onClick="onClearBtnClick"
+            />
     </LinearLayout>
 
 </RelativeLayout>
